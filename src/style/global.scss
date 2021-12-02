@@ -1,0 +1,7 @@
+@use "root" as root;
+body {
+  box-sizing: border-box;
+  font-family: root.$primary-font !important;
+  margin: 0;
+  padding: 0;
+}
