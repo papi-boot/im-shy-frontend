@@ -15,6 +15,7 @@ const GlobalDataProvider = (props) => {
   });
   const [authModalTab, setAuthModalTab] = React.useState("Sign-in");
   const snackBarRef = React.useRef(null);
+  const authModalRef = React.useRef(null);
 
   if (themeMode) {
     document.body.style.backgroundColor = "rgb(255,255,255)";
@@ -29,6 +30,7 @@ const GlobalDataProvider = (props) => {
     setSnackBarOption,
     authModalTab,
     setAuthModalTab,
+    authModalRef,
     snackBarRef,
   };
   return (

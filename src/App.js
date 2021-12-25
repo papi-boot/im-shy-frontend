@@ -13,7 +13,6 @@ import PrivacyPolicy from "page/PrivacyPolicy";
 import TermsAndConditions from "page/TermsAndConditions";
 const App = () => {
   const { themeMode, snackBarRef } = React.useContext(GlobalDataContext);
-
   return (
     <Fragment>
       <ThemeProvider theme={themeMode ? mainTheme : darkTheme}>

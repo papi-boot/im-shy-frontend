@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialStateValue = {
+  user_id: "",
   user_name: "",
   user_email: "",
   isAuthenticated: false,
@@ -20,9 +21,12 @@ export const userSlice = createSlice({
     signInRequest: (state, action) => {
       state.value = action.payload;
     },
+    checkAuthState: (state, action) => {
+      state.value = action.payload;
+    },
   },
 });
 
-export const { signUpRequest, signInRequest } = userSlice.actions;
+export const { signUpRequest, signInRequest, checkAuthState } = userSlice.actions;
 
 export default userSlice.reducer;

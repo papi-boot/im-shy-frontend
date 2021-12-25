@@ -66,7 +66,11 @@ export const signInRequestUtil = (args) => {
     routePath,
     setSnackBarOption,
     snackBarRef,
+    dispatch,
+    signInRequest,
+    history,
     setIsLogging,
+    authModalRef,
   } = args;
   setIsLogging(true);
   useFetch(params, httpMethod, routePath)
@@ -79,8 +83,11 @@ export const signInRequestUtil = (args) => {
             vertical: "top",
             horizontal: "center",
           });
+          dispatch(signInRequest(res));
           snackBarRef.current.toggleSnackBar();
           setIsLogging(false);
+          authModalRef.current.toggleModal();
+          history.replace("/dashboard");
         } else {
           setSnackBarOption({
             text: res.message,

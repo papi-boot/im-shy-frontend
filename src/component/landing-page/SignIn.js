@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { signInRequest } from "feature/user/user";
 import {
   TextField,
   Box,
@@ -15,10 +17,10 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { GlobalDataContext } from "context/GlobalData";
 import { signInRequestUtil } from "utils/landing-page/utilsLandingPage";
 const SignIn = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
-  const { snackBarRef, setSnackBarOption } = React.useContext(
-    GlobalDataContext
-  );
+  const { snackBarRef, setSnackBarOption, authModalRef } = React.useContext(GlobalDataContext);
   const [showPassword, setShowPassword] = React.useState(false);
   const [isLogging, setIsLogging] = React.useState(false);
   const userNameRef = React.useRef(null);
@@ -39,6 +41,10 @@ const SignIn = () => {
       snackBarRef,
       setSnackBarOption,
       setIsLogging,
+      dispatch,
+      signInRequest,
+      history,
+      authModalRef,
     });
   };
 
@@ -70,10 +76,7 @@ const SignIn = () => {
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton
-                  onClick={() => setShowPassword(!showPassword)}
-                  edge="end"
-                >
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
