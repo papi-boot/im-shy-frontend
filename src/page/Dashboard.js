@@ -1,10 +1,18 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react-hooks/exhaustive-deps  */
 import React, { Fragment } from "react";
+import { useDispatch, userSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { GlobalDataContext } from "context/GlobalData";
+import { fetchMessages } from "utils/dashboard/utilsMessage";
 import { Box } from "@mui/material";
-import DashboardTab from "component/dashboard/DashboardTab";
+import DashboardTab from "pages-component/dashboard/DashboardTab";
 const Dashboard = () => {
-  const { themeMode } = React.useContext(GlobalDataContext);
+  const dispatch = useDispatch();
+  const { themeMode, messageReloader, setSnackBarOption, snackBarRef, setShowMessageSkel } = React.useContext(GlobalDataContext);
+  React.useEffect(() => {
+    fetchMessages({setSnackBarOption, dispatch, snackBarRef, setShowMessageSkel});
+  }, [messageReloader]);
   return (
     <Fragment>
       <Box sx={{ color: themeMode ? "#000" : "#fff" }}>

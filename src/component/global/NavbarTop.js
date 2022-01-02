@@ -2,34 +2,25 @@ import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Box, IconButton, Icon, Tooltip, Container, Avatar } from "@mui/material";
-import {
-  PlayArrow,
-  ArrowRightAlt,
-  LightMode,
-  DarkMode,
-  Shield,
-  Gavel,
-  AddComment,
-} from "@mui/icons-material";
+import { PlayArrow, ArrowRightAlt, LightMode, DarkMode, Shield, Gavel } from "@mui/icons-material";
 import { GlobalDataContext } from "context/GlobalData";
 import AuthModal from "component/landing-page/AuthModal";
-import SendMessageModal from "component/dashboard/SendMessageModal";
+import SendMessageButton from "component/dashboard/SendMessageButton";
 import UserMenu from "component/dashboard/UserMenu";
 const NavbarTop = () => {
   const user = useSelector((state) => state.user.value);
   const avatarImageSrc = `https://avatars.dicebear.com/api/initials/${user.user_name}.svg`;
   const { themeMode, setThemeMode, authModalRef } = React.useContext(GlobalDataContext);
   const userMenuRef = React.useRef(null);
-  const sendMessageModalRef = React.useRef(null);
   return (
     <Fragment>
       <AuthModal ref={authModalRef} />
-      <SendMessageModal ref={sendMessageModalRef} />
       <Box
         sx={{
           backgroundColor: themeMode ? "#fff" : "primary.dark",
           position: "sticky",
           top: "0",
+          zIndex: "10"
         }}
       >
         <Container>
@@ -139,15 +130,7 @@ const NavbarTop = () => {
               )}
               {user.isAuthenticated ? (
                 <div>
-                  <Tooltip title={"Send A Message"}>
-                    <IconButton
-                      onClick={() => sendMessageModalRef.current.toggleModal()}
-                      sx={{ color: themeMode ? "#000" : "#fff" }}
-                    >
-                      <AddComment />
-                    </IconButton>
-                  </Tooltip>
-                  <UserMenu ref={userMenuRef} />
+                  <SendMessageButton />
                 </div>
               ) : (
                 ""

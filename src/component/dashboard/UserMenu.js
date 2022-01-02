@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Menu, MenuItem, Box, ListItemIcon } from "@mui/material";
+import { Menu, MenuItem, ListItemIcon } from "@mui/material";
 import { Face, Link, Logout } from "@mui/icons-material";
 const UserMenu = React.forwardRef((props, ref) => {
   const [anchorElement, setAnchorElement] = React.useState(null);

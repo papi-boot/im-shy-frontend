@@ -1,5 +1,4 @@
 import { io } from "socket.io-client";
-
 const socketURL =
   process.env.NODE_ENV === "production"
     ? "https://im-shy.herokuapp.com"
