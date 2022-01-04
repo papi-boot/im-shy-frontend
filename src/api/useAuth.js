@@ -3,12 +3,15 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { GlobalDataContext } from "context/GlobalData";
 import { useFetch } from "api/useFetch";
 import { useThrowError } from "api/useError";
 import { checkAuthState } from "feature/user/user";
+import { socketSendMessage } from "./useSocketMethod";
 export const useAuth = (path) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const { dataReloaderRef } = React.useContext(GlobalDataContext);
   React.useEffect(() => {
     useFetch(null, "GET", "authenticate")
       .then((res) => {
@@ -16,6 +19,7 @@ export const useAuth = (path) => {
           if (res.success) {
             dispatch(checkAuthState(res));
             history.replace(path);
+            socketSendMessage({ user_id: res.user_id, dataReloaderRef });
           } else {
             history.replace("/");
           }

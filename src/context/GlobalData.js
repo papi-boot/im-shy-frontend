@@ -3,9 +3,6 @@ import React from "react";
 import { useSocket } from "api/useSocket";
 export const GlobalDataContext = React.createContext();
 const GlobalDataProvider = (props) => {
-  React.useEffect(() => {
-    useSocket().on("connect", (socket) => {});
-  }, []);
   const [themeMode, setThemeMode] = React.useState(true);
   const [snackBarOption, setSnackBarOption] = React.useState({
     text: "",
@@ -14,6 +11,9 @@ const GlobalDataProvider = (props) => {
     horizontal: "",
   });
   const [authModalTab, setAuthModalTab] = React.useState("Sign-in");
+  const [messageReloader, setMessageReloader] = React.useState(false);
+  const [showMessageSkel, setShowMessageSkel] = React.useState(true);
+  const dataReloaderRef = React.useRef(null);
   const snackBarRef = React.useRef(null);
   const authModalRef = React.useRef(null);
 
@@ -25,19 +25,20 @@ const GlobalDataProvider = (props) => {
 
   const value = {
     themeMode,
-    setThemeMode,
     snackBarOption,
-    setSnackBarOption,
     authModalTab,
-    setAuthModalTab,
-    authModalRef,
     snackBarRef,
+    authModalRef,
+    messageReloader,
+    dataReloaderRef,
+    showMessageSkel,
+    setShowMessageSkel,
+    setMessageReloader,
+    setSnackBarOption,
+    setThemeMode,
+    setAuthModalTab,
   };
-  return (
-    <GlobalDataContext.Provider value={value}>
-      {props.children}
-    </GlobalDataContext.Provider>
-  );
+  return <GlobalDataContext.Provider value={value}>{props.children}</GlobalDataContext.Provider>;
 };
 
 export default GlobalDataProvider;

@@ -2,7 +2,7 @@ export const useFetch = async (params, httpMethod, route) => {
   try {
     let prefixPath =
       process.env.NODE_ENV === "production"
-        ? "https://im-shy.herokuapp.com"
+        ? "https://imshy-api.herokuapp.com"
         : "http://localhost:3030";
     const response = await fetch(`${prefixPath}/${route}`, {
       method: httpMethod,

@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
 import {
   Dialog,
   DialogActions,
@@ -14,11 +16,17 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { Close, Message, Help, Send } from "@mui/icons-material";
+import { GlobalDataContext } from "context/GlobalData";
+import { sendMessageRequest } from "utils/dashboard/utilsDashboard";
 const SendMessageModal = React.forwardRef((props, ref) => {
+  const { setSnackBarOption, snackBarRef } = React.useContext(GlobalDataContext);
+  const user = useSelector((state) => state.user.value);
   const [show, setShow] = React.useState(false);
   const [isCheck, setIsCheck] = React.useState(false);
   const [isSending, setIsSending] = React.useState(false);
   const close = () => setShow(!show);
+  const recieverRef = React.useRef(null);
+  const messageRef = React.useRef(null);
   React.useImperativeHandle(ref, () => ({
     toggleModal() {
       setShow(!show);
@@ -27,7 +35,16 @@ const SendMessageModal = React.forwardRef((props, ref) => {
 
   // @TODO: handle send request message
   const handleSendMessageRequest = () => {
-    setIsSending(!isSending);
+    sendMessageRequest({
+      recieverRef,
+      messageRef,
+      setIsSending,
+      isSending,
+      setSnackBarOption,
+      snackBarRef,
+      close,
+      user,
+    });
   };
   return (
     <Fragment>
@@ -52,8 +69,15 @@ const SendMessageModal = React.forwardRef((props, ref) => {
               sx={{ display: "flex", alignItems: "center", justifyContent: "between" }}
             >
               <Box sx={{ width: "100%" }}>
-                <Typography fontSize=".8rem" pb=".4rem" >Send this message to:</Typography>
-                <TextField fullWidth variant="outlined" label="Enter Username or Link" />
+                <Typography fontSize=".8rem" pb=".4rem">
+                  Send this message to:
+                </Typography>
+                <TextField
+                  inputRef={recieverRef}
+                  fullWidth
+                  variant="outlined"
+                  label="Enter Username or Link"
+                />
               </Box>
               <Tooltip
                 title="Put the Username or Link address of a user to directly send a message. Example: @Imshy10 or https://www.im-shy.me/@Imshy10"
@@ -66,6 +90,7 @@ const SendMessageModal = React.forwardRef((props, ref) => {
             </Box>
             <Box my="1rem">
               <TextField
+                inputRef={messageRef}
                 type="text"
                 variant="filled"
                 label="Your message here"
