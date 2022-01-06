@@ -18,6 +18,7 @@ import { LoadingButton } from "@mui/lab";
 import { Close, Message, Help, Send } from "@mui/icons-material";
 import { GlobalDataContext } from "context/GlobalData";
 import { sendMessageRequest } from "utils/dashboard/utilsDashboard";
+import UserHelperPopover from "component/global/UserHelperPopover";
 const SendMessageModal = React.forwardRef((props, ref) => {
   const { setSnackBarOption, snackBarRef } = React.useContext(GlobalDataContext);
   const user = useSelector((state) => state.user.value);
@@ -27,6 +28,7 @@ const SendMessageModal = React.forwardRef((props, ref) => {
   const close = () => setShow(!show);
   const recieverRef = React.useRef(null);
   const messageRef = React.useRef(null);
+  const userHelperPopoverRef = React.useRef(null);
   React.useImperativeHandle(ref, () => ({
     toggleModal() {
       setShow(!show);
@@ -79,14 +81,12 @@ const SendMessageModal = React.forwardRef((props, ref) => {
                   label="Enter Username or Link"
                 />
               </Box>
-              <Tooltip
-                title="Put the Username or Link address of a user to directly send a message. Example: @Imshy10 or https://www.im-shy.me/@Imshy10"
-                placement="top-end"
-              >
-                <IconButton>
+              <Box>
+                <IconButton onClick={(e) => userHelperPopoverRef.current.togglePopover(e)}>
                   <Help />
                 </IconButton>
-              </Tooltip>
+                <UserHelperPopover ref={userHelperPopoverRef}/>
+              </Box>
             </Box>
             <Box my="1rem">
               <TextField

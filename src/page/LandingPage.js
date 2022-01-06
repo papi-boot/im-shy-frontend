@@ -8,7 +8,7 @@ const LandingPage = () => {
   const { themeMode } = React.useContext(GlobalDataContext);
   return (
     <Fragment>
-      <Box sx={{ color: themeMode ? "#000" : "#fff" }}>
+      <Box sx={{ color: themeMode === "light" ? "#000" : "#fff" }}>
         <h1>Landing Page</h1>
       </Box>
     </Fragment>

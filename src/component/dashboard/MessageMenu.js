@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { GlobalDataContext } from "context/GlobalData";
 import { Menu, MenuItem, ListItemIcon } from "@mui/material";
 import { Delete } from "@mui/icons-material";
-import { deleteMessage } from "utils/dashboard/utilsMessage";
+import { deleteMessageRequest } from "utils/dashboard/utilsMessage";
 
 const MessageMenu = React.forwardRef((props, ref) => {
   const { setSnackBarOption, snackBarRef, dataReloaderRef } = React.useContext(GlobalDataContext);
@@ -20,14 +20,14 @@ const MessageMenu = React.forwardRef((props, ref) => {
     },
   }));
   // @TODO: handle delete message
-  const handleDeleteMessage = () => {
-    deleteMessage({ message_id: getMessageID, setSnackBarOption, snackBarRef, dataReloaderRef });
+  const handledeleteMessageRequest = () => {
+    deleteMessageRequest({ message_id: getMessageID, setSnackBarOption, snackBarRef, dataReloaderRef });
   };
   return (
     <Fragment>
       <Menu anchorEl={anchorElement} open={show} onClose={close} onClick={close}>
         <MenuItem>
-          <ListItemIcon onClick={() => handleDeleteMessage()}>
+          <ListItemIcon onClick={() => handledeleteMessageRequest()}>
             <Delete fontSize="small" />
             &nbsp; Delete
           </ListItemIcon>

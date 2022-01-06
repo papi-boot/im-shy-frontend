@@ -13,10 +13,19 @@ import LandingPage from "page/LandingPage";
 import PrivacyPolicy from "page/PrivacyPolicy";
 import TermsAndConditions from "page/TermsAndConditions";
 const App = () => {
-  const { themeMode, snackBarRef, dataReloaderRef } = React.useContext(GlobalDataContext);
+  const { themeMode, themeReloader, setThemeMode, snackBarRef, dataReloaderRef } =
+    React.useContext(GlobalDataContext);
+  React.useEffect(() => {
+    setThemeMode(localStorage.getItem("theme"));
+  }, [themeReloader, themeMode]);
+  if (themeMode === "light") {
+    document.body.style.backgroundColor = "rgb(255,255,255)";
+  } else {
+    document.body.style.backgroundColor = "rgb(35,35,35)";
+  }
   return (
     <Fragment>
-      <ThemeProvider theme={themeMode ? mainTheme : darkTheme}>
+      <ThemeProvider theme={themeMode === "light" ? mainTheme : darkTheme}>
         <SnackBar ref={snackBarRef} />
         <DataToggler ref={dataReloaderRef} />
         <NavbarTop />

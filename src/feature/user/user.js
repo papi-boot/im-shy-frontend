@@ -24,9 +24,12 @@ export const userSlice = createSlice({
     checkAuthState: (state, action) => {
       state.value = action.payload;
     },
+    signOutRequest: (state, action) => {
+      state.value = initialStateValue;
+    },
   },
 });
 
-export const { signUpRequest, signInRequest, checkAuthState } = userSlice.actions;
+export const { signUpRequest, signInRequest, checkAuthState, signOutRequest } = userSlice.actions;
 
 export default userSlice.reducer;

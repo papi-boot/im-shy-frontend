@@ -24,7 +24,7 @@ const DashboardTab = () => {
       <TabContext value={currentTab}>
         <Box
           sx={{
-            bgcolor: themeMode ? "#fff" : "rgb(35,35,35);",
+            bgcolor: themeMode === "light" ? "#fff" : "rgb(35,35,35);",
             borderBottom: 1,
             borderColor: "divider",
             zIndex: "1",

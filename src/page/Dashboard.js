@@ -4,18 +4,18 @@ import React, { Fragment } from "react";
 import { useDispatch, userSelector } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { GlobalDataContext } from "context/GlobalData";
-import { fetchMessages } from "utils/dashboard/utilsMessage";
+import { fetchMessagesRequest } from "utils/dashboard/utilsMessage";
 import { Box } from "@mui/material";
 import DashboardTab from "pages-component/dashboard/DashboardTab";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { themeMode, messageReloader, setSnackBarOption, snackBarRef, setShowMessageSkel } = React.useContext(GlobalDataContext);
   React.useEffect(() => {
-    fetchMessages({setSnackBarOption, dispatch, snackBarRef, setShowMessageSkel});
+    fetchMessagesRequest({setSnackBarOption, dispatch, snackBarRef, setShowMessageSkel});
   }, [messageReloader]);
   return (
     <Fragment>
-      <Box sx={{ color: themeMode ? "#000" : "#fff" }}>
+      <Box sx={{ color: themeMode === "light" ? "#000" : "#fff" }}>
         <DashboardTab />
       </Box>
     </Fragment>

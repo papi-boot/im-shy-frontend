@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import {LoadingButton} from "@mui/lab";
 import { Close } from "@mui/icons-material";
-import { deleteAllMessage } from "utils/dashboard/utilsMessage";
+import { deleteAllMessageRequest } from "utils/dashboard/utilsMessage";
 const DeleteAllMessageModal = React.forwardRef((props, ref) => {
   const { setSnackBarOption, snackBarRef, dataReloaderRef } = React.useContext(GlobalDataContext);
   const [show, setShow] = React.useState(false);
@@ -26,7 +26,7 @@ const DeleteAllMessageModal = React.forwardRef((props, ref) => {
 
   // @TODO: handle delete all message
   const handleDeleteAllMessage = () => {
-    deleteAllMessage({ snackBarRef, setSnackBarOption, dataReloaderRef, setIsDeleting, close });
+    deleteAllMessageRequest({ snackBarRef, setSnackBarOption, dataReloaderRef, setIsDeleting, close });
   };
   return (
     <Fragment>

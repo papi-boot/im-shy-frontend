@@ -2,7 +2,7 @@
 import { fetchMyMessages } from "feature/message/message";
 import { useFetch } from "api/useFetch";
 import { useThrowError } from "api/useError";
-export const fetchMessages = (args) => {
+export const fetchMessagesRequest = (args) => {
   const { dispatch, setSnackBarOption, snackBarRef, setShowMessageSkel } = args;
   useFetch(null, "GET", "message")
     .then((res) => {
@@ -28,7 +28,7 @@ export const fetchMessages = (args) => {
     });
 };
 
-export const deleteMessage = (args) => {
+export const deleteMessageRequest = (args) => {
   const { message_id, setSnackBarOption, snackBarRef, dataReloaderRef } = args;
   const params = { message_id };
   useFetch(params, "DELETE", "message")
@@ -67,7 +67,7 @@ export const deleteMessage = (args) => {
     });
 };
 
-export const deleteAllMessage = (args) => {
+export const deleteAllMessageRequest = (args) => {
   const { setSnackBarOption, snackBarRef, dataReloaderRef, setIsDeleting, close } = args;
   const params = { d_all: true };
   setIsDeleting(true);

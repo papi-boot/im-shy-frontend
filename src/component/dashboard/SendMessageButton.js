@@ -13,7 +13,7 @@ const SendMessageButton = () => {
         <Tooltip title={"Send A Message"}>
           <IconButton
             onClick={() => sendMessageModalRef.current.toggleModal()}
-            sx={{ color: themeMode ? "#000" : "#fff" }}
+            sx={{ color: themeMode === "light" ? "#000" : "#fff" }}
           >
             <AddComment />
           </IconButton>
