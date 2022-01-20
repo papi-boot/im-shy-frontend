@@ -10,8 +10,10 @@ const GlobalDataProvider = (props) => {
     vertical: "",
     horizontal: "",
   });
+  const [dashboardTab, setDashboardTab] = React.useState("message");
   const [authModalTab, setAuthModalTab] = React.useState("Sign-in");
   const [messageReloader, setMessageReloader] = React.useState(false);
+  const [addChatListReloader, setAddChatListReloader] = React.useState(false);
   const [showMessageSkel, setShowMessageSkel] = React.useState(true);
   const dataReloaderRef = React.useRef(null);
   const snackBarRef = React.useRef(null);
@@ -25,10 +27,14 @@ const GlobalDataProvider = (props) => {
     snackBarRef,
     authModalRef,
     messageReloader,
+    addChatListReloader,
     dataReloaderRef,
     showMessageSkel,
+    dashboardTab,
+    setDashboardTab,
     setShowMessageSkel,
     setMessageReloader,
+    setAddChatListReloader,
     setSnackBarOption,
     setThemeReloader,
     setThemeMode,

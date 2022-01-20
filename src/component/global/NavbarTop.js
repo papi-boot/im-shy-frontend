@@ -5,8 +5,8 @@ import { Box, IconButton, Icon, Tooltip, Container, Avatar } from "@mui/material
 import { PlayArrow, ArrowRightAlt, LightMode, DarkMode, Shield, Gavel } from "@mui/icons-material";
 import { GlobalDataContext } from "context/GlobalData";
 import AuthModal from "component/landing-page/AuthModal";
-import SendMessageButton from "component/dashboard/SendMessageButton";
-import UserMenu from "component/dashboard/UserMenu";
+import SendMessageButton from "component/dashboard/message/SendMessageButton";
+import UserMenu from "component/dashboard/user/UserMenu";
 const NavbarTop = () => {
   const user = useSelector((state) => state.user.value);
   const avatarImageSrc = `https://avatars.dicebear.com/api/initials/${user.user_name}.svg`;

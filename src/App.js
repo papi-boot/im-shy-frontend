@@ -8,10 +8,11 @@ import DataToggler from "context/DataToggler";
 import SnackBar from "component/global/SnackBar";
 import ProtectedRoute from "page/ProtectedRoute";
 import NavbarTop from "component/global/NavbarTop";
-import Dashboard from "page/Dashboard";
 import LandingPage from "page/LandingPage";
 import PrivacyPolicy from "page/PrivacyPolicy";
 import TermsAndConditions from "page/TermsAndConditions";
+import Dashboard from "page/Dashboard";
+import Chat from "page/Chat";
 const App = () => {
   const { themeMode, themeReloader, setThemeMode, snackBarRef, dataReloaderRef } =
     React.useContext(GlobalDataContext);
@@ -35,6 +36,7 @@ const App = () => {
             <Route exact path="/privacy-policy" component={PrivacyPolicy} />
             <Route exact path="/terms-conditions" component={TermsAndConditions} />
             <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+            <ProtectedRoute exact path="/c/:id" component={Chat}/>
           </Switch>
         </Container>
       </ThemeProvider>

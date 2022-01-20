@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { GlobalDataContext } from "context/GlobalData";
 import { Typography, Box, IconButton, Tooltip } from "@mui/material";
 import { DeleteSweep, Refresh } from "@mui/icons-material";
-import MessageList from "component/dashboard/MessageList";
-import DeleteAllMessageModal from "component/dashboard/DeleteAllMessageModal";
+import MessageList from "component/dashboard/message/MessageList";
+import DeleteAllMessageModal from "component/dashboard/message/DeleteAllMessageModal";
 const MessageSection = () => {
   const { dataReloaderRef } = React.useContext(GlobalDataContext);
   const message = useSelector((state) => state.message.value);

@@ -5,16 +5,28 @@ import { Box, Tab, Badge } from "@mui/material";
 import { TabContext, TabPanel, TabList } from "@mui/lab";
 import { Mail, ChatBubble } from "@mui/icons-material";
 import MessageSection from "./MessageSection";
+import ChatSection from "./ChatSection";
 const DashboardTab = () => {
-  const { themeMode } = React.useContext(GlobalDataContext);
-  const [currentTab, setCurrentTab] = React.useState("message");
+  const { themeMode, dashboardTab } = React.useContext(GlobalDataContext);
   const message = useSelector((state) => state.message.value);
+  const { chat_count } = useSelector((state) => state.chat.value);
+  const [currentTab, setCurrentTab] = React.useState(dashboardTab);
   // @TODO: Messages Badge Count
   const MessageCount = () => {
     return (
       <Fragment>
         <Badge badgeContent={message.my_message.length} color="error" max={99} showZero>
           <Mail />
+        </Badge>
+      </Fragment>
+    );
+  };
+  // @TODO: Chat list count
+  const ChatListCount = () => {
+    return (
+      <Fragment>
+        <Badge badgeContent={chat_count} color="error" max={99} showZero>
+          <ChatBubble />
         </Badge>
       </Fragment>
     );
@@ -34,13 +46,15 @@ const DashboardTab = () => {
         >
           <TabList onChange={(e, newTab) => setCurrentTab(newTab)}>
             <Tab label={<MessageCount />} value="message" />
-            <Tab label={<ChatBubble />} value="chat" />
+            <Tab label={<ChatListCount />} value="chat" />
           </TabList>
         </Box>
         <TabPanel value="message" sx={{ p: 0 }}>
           <MessageSection />
         </TabPanel>
-        <TabPanel value="chat" sx={{ p: 0 }}></TabPanel>
+        <TabPanel value="chat" sx={{ p: 0 }}>
+          <ChatSection />
+        </TabPanel>
       </TabContext>
     </Fragment>
   );

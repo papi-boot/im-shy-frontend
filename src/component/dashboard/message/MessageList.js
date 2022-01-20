@@ -16,14 +16,17 @@ import {
 import { AddComment, MoreVert, Inbox } from "@mui/icons-material";
 import { format } from "date-fns";
 import MessageMenu from "./MessageMenu";
+import ChatAcceptModal from "component/dashboard/chat/ChatAcceptModal";
 import MessageSkeleton from "component/global/MessageSkeleton";
 const MessageList = () => {
   const { showMessageSkel } = React.useContext(GlobalDataContext);
   const message = useSelector((state) => state.message.value);
   const messageMenuRef = React.useRef(null);
+  const chatAcceptModalRef = React.useRef(null);
 
   return (
     <Fragment>
+      <ChatAcceptModal ref={chatAcceptModalRef} />
       {showMessageSkel ? <MessageSkeleton /> : ""}
       {message.my_message.length > 0 ? (
         <Fragment>
@@ -74,7 +77,12 @@ const MessageList = () => {
                   }}
                 >
                   <Tooltip title="Accept chat request" placement="top">
-                    <IconButton>
+                    <IconButton
+                      onClick={() => {
+                        chatAcceptModalRef.current.toggleModal();
+                        chatAcceptModalRef.current.getUnkownUserID(item.message_from);
+                      }}
+                    >
                       <AddComment />
                     </IconButton>
                   </Tooltip>

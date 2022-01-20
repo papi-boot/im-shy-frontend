@@ -7,7 +7,7 @@ import { GlobalDataContext } from "context/GlobalData";
 import { useFetch } from "api/useFetch";
 import { useThrowError } from "api/useError";
 import { checkAuthState } from "feature/user/user";
-import { socketSendMessage } from "./useSocketMethod";
+import { socketSendMessage, socketChatListAccept } from "./useSocketMethod";
 export const useAuth = (path) => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ export const useAuth = (path) => {
             dispatch(checkAuthState(res));
             history.replace(path);
             socketSendMessage({ user_id: res.user_id, dataReloaderRef });
+            socketChatListAccept({ user_id: res.user_id, dataReloaderRef });
           } else {
             history.replace("/");
           }

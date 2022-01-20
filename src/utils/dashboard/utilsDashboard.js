@@ -38,5 +38,18 @@ export const sendMessageRequest = (args) => {
         useThrowError();
       }
     })
-    .catch((err) => {});
+    .catch((err) => {
+      setSnackBarOption({
+        text: err.message,
+        severity: "error",
+        vertical: "top",
+        horizontal: "center",
+      });
+      setIsSending(false);
+      snackBarRef.current.toggleSnackBar();
+    });
+};
+
+export const registerChatList = () => {
+  useFetch(null, "GET", "add-chat-list").then().catch();
 };

@@ -8,26 +8,41 @@ import {
   IconButton,
   Box,
   Button,
+  TextField,
   Typography,
 } from "@mui/material";
-import {LoadingButton} from "@mui/lab";
+import { LoadingButton } from "@mui/lab";
 import { Close } from "@mui/icons-material";
-import { deleteAllMessageRequest } from "utils/dashboard/utilsMessage";
-const DeleteAllMessageModal = React.forwardRef((props, ref) => {
+import { addUserChatRequest } from "utils/dashboard/utilsChat";
+const ChatAcceptModal = React.forwardRef((props, ref) => {
   const { setSnackBarOption, snackBarRef, dataReloaderRef } = React.useContext(GlobalDataContext);
   const [show, setShow] = React.useState(false);
-  const [isDeleting, setIsDeleting] = React.useState(false);
+  const [isAddingChatUser, setIsAddingChatUser] = React.useState(false);
+  const [unknownUserID, setUnknownUserID] = React.useState("");
+  const unknownDisplayNameRef = React.useRef(null);
   const close = () => setShow(!show);
   React.useImperativeHandle(ref, () => ({
     toggleModal() {
       setShow(!show);
     },
+    getUnkownUserID(_id) {
+      setUnknownUserID(_id);
+    },
   }));
 
-  // @TODO: handle delete all message
-  const handleDeleteAllMessage = () => {
-    deleteAllMessageRequest({ snackBarRef, setSnackBarOption, dataReloaderRef, setIsDeleting, close });
+  // @TODO: handle chat add list request
+  const handleAddUserChatRequest = () => {
+    addUserChatRequest({
+      uid: unknownUserID,
+      d_name: unknownDisplayNameRef.current.value,
+      setSnackBarOption,
+      snackBarRef,
+      dataReloaderRef,
+      setIsAddingChatUser,
+      close
+    });
   };
+
   return (
     <Fragment>
       <Dialog open={show} onClose={close} fullWidth>
@@ -41,17 +56,31 @@ const DeleteAllMessageModal = React.forwardRef((props, ref) => {
         </Box>
         <DialogTitle>
           <Typography component="h6" sx={{ fontWeight: "bold" }}>
-            Hang on...
+            Add to Chat list
           </Typography>
         </DialogTitle>
         <DialogContent sx={{ py: 0 }}>
-          Are you sure you want delete all of your message?
+          Accept and add this unknown user to your chat list?
+          <Box mt="1rem">
+            <TextField
+              inputRef={unknownDisplayNameRef}
+              variant="outlined"
+              label="Display name"
+              fullWidth
+              helperText="This would serve as the name of unknown user"
+            />
+          </Box>
         </DialogContent>
         <DialogActions sx={{ mt: "1rem" }}>
           <Button variant="text" onClick={() => close()}>
             Close
           </Button>
-          <LoadingButton loading={isDeleting} variant="contained" color="error" onClick={() => handleDeleteAllMessage()}>
+          <LoadingButton
+            loading={isAddingChatUser}
+            variant="contained"
+            color="success"
+            onClick={() => handleAddUserChatRequest()}
+          >
             Confirm
           </LoadingButton>
         </DialogActions>
@@ -60,4 +89,4 @@ const DeleteAllMessageModal = React.forwardRef((props, ref) => {
   );
 });
 
-export default DeleteAllMessageModal;
+export default ChatAcceptModal;

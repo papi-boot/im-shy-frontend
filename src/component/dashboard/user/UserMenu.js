@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signOutRequest } from "feature/user/user";
 import { GlobalDataContext } from "context/GlobalData";
-import { Menu, MenuItem, ListItemIcon } from "@mui/material";
+import { Menu, MenuItem, ListItemIcon, Divider } from "@mui/material";
 import { Face, Link, Logout } from "@mui/icons-material";
 import { logOutRequest } from "utils/dashboard/utilsLogout";
 const UserMenu = React.forwardRef((props, ref) => {
@@ -26,13 +26,13 @@ const UserMenu = React.forwardRef((props, ref) => {
   return (
     <Fragment>
       <Menu anchorEl={anchorElement} open={show} onClose={close} onClick={close}>
-        <MenuItem>
+        <MenuItem divider>
           <ListItemIcon>
             <Face fontSize="small" />
             &nbsp;Profile
           </ListItemIcon>
         </MenuItem>
-        <MenuItem>
+        <MenuItem divider>
           <ListItemIcon>
             <Link fontSize="small" />
             &nbsp;My Link
