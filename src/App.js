@@ -1,3 +1,5 @@
+/* eslint-disble react-hooks/rules-of-hooks  */
+/* eslint-disable react-hooks/exhaustive-deps  */
 import React, { Fragment } from "react";
 import { Route, Switch } from "react-router-dom";
 import { Container } from "@mui/material";

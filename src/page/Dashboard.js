@@ -9,11 +9,19 @@ import { fetchMessagesRequest } from "utils/dashboard/utilsMessage";
 import { registerChatList } from "utils/dashboard/utilsDashboard";
 import { fetchMyChatListRequest } from "utils/dashboard/utilsChat";
 import { Box } from "@mui/material";
+import { addChatCount } from "feature/chat/chat";
 import DashboardTab from "pages-component/dashboard/DashboardTab";
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { themeMode, messageReloader, addChatListReloader,  setSnackBarOption, snackBarRef, setShowMessageSkel } =
-    React.useContext(GlobalDataContext);
+  const chat = useSelector((state) => state.chat.value);
+  const {
+    themeMode,
+    messageReloader,
+    addChatListReloader,
+    setSnackBarOption,
+    snackBarRef,
+    setShowMessageSkel,
+  } = React.useContext(GlobalDataContext);
   React.useEffect(() => {
     registerChatList();
   }, []);
@@ -21,8 +29,18 @@ const Dashboard = () => {
     fetchMessagesRequest({ setSnackBarOption, dispatch, snackBarRef, setShowMessageSkel });
   }, [messageReloader]);
   React.useEffect(() => {
-    fetchMyChatListRequest({ setSnackBarOption, dispatch, snackBarRef, fetchChatList });
+    fetchMyChatListRequest({
+      setSnackBarOption,
+      dispatch,
+      snackBarRef,
+      fetchChatList,
+      chat,
+      addChatCount,
+    });
   }, [addChatListReloader]);
+  React.useLayoutEffect(() => {
+    document.body.style.overflow = "unset";
+  }, []);
   return (
     <Fragment>
       <Box sx={{ color: themeMode === "light" ? "#000" : "#fff" }}>

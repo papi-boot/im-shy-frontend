@@ -57,12 +57,14 @@ export const addUserChatRequest = (args) => {
 };
 
 export const fetchMyChatListRequest = (args) => {
-  const { fetchChatList, setSnackBarOption, snackBarRef, dispatch } = args;
+  const { fetchChatList, setSnackBarOption, snackBarRef, dispatch, addChatCount } = args;
   useFetch(null, "GET", "chat")
     .then((res) => {
       if (res) {
         if (res.success) {
           dispatch(fetchChatList(res));
+          dispatch(addChatCount(JSON.parse(res.chat_list_accepted_user).length));
+          // console.log(JSON.parse(res.chat_list_accepted_user).length);
         } else {
           // no error alert
         }
@@ -79,4 +81,17 @@ export const fetchMyChatListRequest = (args) => {
       });
       snackBarRef.current.toggleSnackBar();
     });
+};
+
+export const sendChatMessageRequest = (args) => {
+  const { chatInfo, messageInputRef, user } = args;
+  useSocket().emit("send chat-message", {
+    chatInfo,
+    from: user.user_id,
+    to: chatInfo.a_uid,
+    message: messageInputRef.current.value,
+    date: new Date(),
+  });
+  messageInputRef.current.value = "";
+  messageInputRef.current.focus();
 };

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks  */
+/* eslint-disable react-hooks/exhaustive-deps  */
 import React, { Fragment } from "react";
 import { GlobalDataContext } from "context/GlobalData";
 import { NavLink } from "react-router-dom";
@@ -10,15 +12,17 @@ import {
   ListItemButton,
   ListItemAvatar,
   ListItemText,
-  Typography,
 } from "@mui/material";
-import { addChatCount } from "feature/chat/chat";
+import { renderChatInfo } from "feature/chat/chat_info";
+import { getChatLinkParams } from "feature/chat/chat_link";
 const ChatSection = () => {
-  const dispatch = useDispatch();
   const { themeMode, setDashboardTab } = React.useContext(GlobalDataContext);
-  setDashboardTab("chat");
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    setDashboardTab("chat");
+    dispatch(getChatLinkParams(""));
+  }, []);
   const { chat } = useSelector((state) => state.chat.value);
-  dispatch(addChatCount(JSON.parse(chat.chat_list_accepted_user).length));
   return (
     <Fragment>
       <Box component="div">
@@ -32,6 +36,9 @@ const ChatSection = () => {
               key={item.a_c_link}
               component={NavLink}
               to={`/c/${item.a_c_link}`}
+              onClick={() => {
+                dispatch(renderChatInfo(item));
+              }}
             >
               <ListItemButton>
                 <ListItemAvatar>

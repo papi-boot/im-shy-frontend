@@ -7,11 +7,16 @@ import { GlobalDataContext } from "context/GlobalData";
 import { useFetch } from "api/useFetch";
 import { useThrowError } from "api/useError";
 import { checkAuthState } from "feature/user/user";
-import { socketSendMessage, socketChatListAccept } from "./useSocketMethod";
+import {
+  socketSendMessage,
+  socketChatListAccept,
+  socketSendChatMessage,
+  socketTypingChat,
+} from "./useSocketMethod";
 export const useAuth = (path) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { dataReloaderRef } = React.useContext(GlobalDataContext);
+  const { dataReloaderRef, messageBoxRef } = React.useContext(GlobalDataContext);
   React.useEffect(() => {
     useFetch(null, "GET", "authenticate")
       .then((res) => {
@@ -21,6 +26,8 @@ export const useAuth = (path) => {
             history.replace(path);
             socketSendMessage({ user_id: res.user_id, dataReloaderRef });
             socketChatListAccept({ user_id: res.user_id, dataReloaderRef });
+            socketSendChatMessage({ user_id: res.user_id, dataReloaderRef });
+            socketTypingChat({ user_id: res.user_id, dataReloaderRef });
           } else {
             history.replace("/");
           }

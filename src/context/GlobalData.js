@@ -18,6 +18,8 @@ const GlobalDataProvider = (props) => {
   const dataReloaderRef = React.useRef(null);
   const snackBarRef = React.useRef(null);
   const authModalRef = React.useRef(null);
+  const messageBoxRef = React.useRef(null);
+  const typingChatRef = React.useRef(null);
 
   const value = {
     themeMode,
@@ -31,6 +33,8 @@ const GlobalDataProvider = (props) => {
     dataReloaderRef,
     showMessageSkel,
     dashboardTab,
+    messageBoxRef,
+    typingChatRef,
     setDashboardTab,
     setShowMessageSkel,
     setMessageReloader,

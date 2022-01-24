@@ -7,10 +7,9 @@ import { Mail, ChatBubble } from "@mui/icons-material";
 import MessageSection from "./MessageSection";
 import ChatSection from "./ChatSection";
 const DashboardTab = () => {
-  const { themeMode, dashboardTab } = React.useContext(GlobalDataContext);
+  const { themeMode, dashboardTab, setDashboardTab } = React.useContext(GlobalDataContext);
   const message = useSelector((state) => state.message.value);
   const { chat_count } = useSelector((state) => state.chat.value);
-  const [currentTab, setCurrentTab] = React.useState(dashboardTab);
   // @TODO: Messages Badge Count
   const MessageCount = () => {
     return (
@@ -33,7 +32,7 @@ const DashboardTab = () => {
   };
   return (
     <Fragment>
-      <TabContext value={currentTab}>
+      <TabContext value={dashboardTab}>
         <Box
           sx={{
             bgcolor: themeMode === "light" ? "#fff" : "rgb(35,35,35);",
@@ -44,7 +43,7 @@ const DashboardTab = () => {
             top: "4.3rem",
           }}
         >
-          <TabList onChange={(e, newTab) => setCurrentTab(newTab)}>
+          <TabList onChange={(e, newTab) => setDashboardTab(newTab)}>
             <Tab label={<MessageCount />} value="message" />
             <Tab label={<ChatListCount />} value="chat" />
           </TabList>
