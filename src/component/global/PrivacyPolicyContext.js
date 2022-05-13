@@ -10,7 +10,7 @@ const PrivacyPolicyContext = () => {
       <IconButton component={Link} to="/" sx={{ my: 2 }}>
         <ArrowBack />
       </IconButton>
-      <Box sx={{ color: themeMode ? "#000" : "#fff", padding: "1rem" }}>
+      <Box sx={{ color: themeMode === "light" ? "#000" : "#fff", padding: "1rem" }}>
         <div>
           <h2 style={{ textAlign: "center" }}>
             <b>PRIVACY POLICY</b>

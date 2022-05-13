@@ -5,22 +5,23 @@ import { Box, IconButton, Icon, Tooltip, Container, Avatar } from "@mui/material
 import { PlayArrow, ArrowRightAlt, LightMode, DarkMode, Shield, Gavel } from "@mui/icons-material";
 import { GlobalDataContext } from "context/GlobalData";
 import AuthModal from "component/landing-page/AuthModal";
-import SendMessageButton from "component/dashboard/SendMessageButton";
-import UserMenu from "component/dashboard/UserMenu";
+import SendMessageButton from "component/dashboard/message/SendMessageButton";
+import UserMenu from "component/dashboard/user/UserMenu";
 const NavbarTop = () => {
   const user = useSelector((state) => state.user.value);
   const avatarImageSrc = `https://avatars.dicebear.com/api/initials/${user.user_name}.svg`;
-  const { themeMode, setThemeMode, authModalRef } = React.useContext(GlobalDataContext);
+  const { themeMode, setThemeMode, setThemeReloader, themeReloader,  authModalRef } = React.useContext(GlobalDataContext);
+  const [themeToggle, setThemeToggle] = React.useState(true);
   const userMenuRef = React.useRef(null);
   return (
     <Fragment>
       <AuthModal ref={authModalRef} />
       <Box
         sx={{
-          backgroundColor: themeMode ? "#fff" : "primary.dark",
+          backgroundColor: themeMode === "light" ? "#fff" : "primary.dark",
           position: "sticky",
           top: "0",
-          zIndex: "10"
+          zIndex: "10",
         }}
       >
         <Container>
@@ -37,7 +38,7 @@ const NavbarTop = () => {
                 component={NavLink}
                 to="/"
                 sx={{
-                  color: themeMode ? "#000" : "#fff",
+                  color: themeMode === "light" ? "#000" : "#fff",
                   textDecoration: "none",
                 }}
               >
@@ -55,7 +56,7 @@ const NavbarTop = () => {
                     variant="outlined"
                     sx={{
                       letterSpacing: "1px",
-                      color: themeMode ? "#000" : "#fff",
+                      color: themeMode === "light" ? "#000" : "#fff",
                     }}
                     size="large"
                     color="primary"
@@ -68,22 +69,26 @@ const NavbarTop = () => {
                 ""
               )}
 
-              <Tooltip title={themeMode ? "Toggle Dark Mode" : "Toggle Light Mode"}>
+              <Tooltip title={themeMode === "light" ? "Toggle Dark Mode" : "Toggle Light Mode"}>
                 <IconButton
                   className="fw-700"
                   variant="outlined"
                   sx={{
                     letterSpacing: "1px",
                     transition: "all .5s ease",
-                    color: themeMode ? "#000" : "#fff",
+                    color: themeMode === "light" ? "#000" : "#fff",
                   }}
                   size="large"
                   color="primary"
                   onClick={() => {
-                    setThemeMode(!themeMode);
+                    setThemeToggle(!themeToggle);
+                    themeToggle
+                      ? localStorage.setItem("theme", "light")
+                      : localStorage.setItem("theme", "dark");
+                    setThemeReloader(!themeReloader);
                   }}
                 >
-                  {themeMode ? <DarkMode /> : <LightMode />}
+                  {themeMode === "light" ? <DarkMode /> : <LightMode />}
                 </IconButton>
               </Tooltip>
               {!user.isAuthenticated ? (
@@ -96,7 +101,7 @@ const NavbarTop = () => {
                     sx={{
                       letterSpacing: "1px",
                       transition: "all .5s ease",
-                      color: themeMode ? "#000" : "#fff",
+                      color: themeMode === "light" ? "#000" : "#fff",
                     }}
                     size="large"
                     color="primary"
@@ -116,7 +121,7 @@ const NavbarTop = () => {
                   sx={{
                     letterSpacing: "1px",
                     transition: "all .5s ease",
-                    color: themeMode ? "#000" : "#fff",
+                    color: themeMode === "light" ? "#000" : "#fff",
                   }}
                   size="large"
                   color="primary"

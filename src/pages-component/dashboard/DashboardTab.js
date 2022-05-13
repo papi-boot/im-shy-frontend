@@ -5,10 +5,11 @@ import { Box, Tab, Badge } from "@mui/material";
 import { TabContext, TabPanel, TabList } from "@mui/lab";
 import { Mail, ChatBubble } from "@mui/icons-material";
 import MessageSection from "./MessageSection";
+import ChatSection from "./ChatSection";
 const DashboardTab = () => {
-  const { themeMode } = React.useContext(GlobalDataContext);
-  const [currentTab, setCurrentTab] = React.useState("message");
+  const { themeMode, dashboardTab, setDashboardTab } = React.useContext(GlobalDataContext);
   const message = useSelector((state) => state.message.value);
+  const { chat_count } = useSelector((state) => state.chat.value);
   // @TODO: Messages Badge Count
   const MessageCount = () => {
     return (
@@ -19,12 +20,22 @@ const DashboardTab = () => {
       </Fragment>
     );
   };
+  // @TODO: Chat list count
+  const ChatListCount = () => {
+    return (
+      <Fragment>
+        <Badge badgeContent={chat_count} color="error" max={99} showZero>
+          <ChatBubble />
+        </Badge>
+      </Fragment>
+    );
+  };
   return (
     <Fragment>
-      <TabContext value={currentTab}>
+      <TabContext value={dashboardTab}>
         <Box
           sx={{
-            bgcolor: themeMode ? "#fff" : "rgb(35,35,35);",
+            bgcolor: themeMode === "light" ? "#fff" : "rgb(35,35,35);",
             borderBottom: 1,
             borderColor: "divider",
             zIndex: "1",
@@ -32,15 +43,17 @@ const DashboardTab = () => {
             top: "4.3rem",
           }}
         >
-          <TabList onChange={(e, newTab) => setCurrentTab(newTab)}>
+          <TabList onChange={(e, newTab) => setDashboardTab(newTab)}>
             <Tab label={<MessageCount />} value="message" />
-            <Tab label={<ChatBubble />} value="chat" />
+            <Tab label={<ChatListCount />} value="chat" />
           </TabList>
         </Box>
         <TabPanel value="message" sx={{ p: 0 }}>
           <MessageSection />
         </TabPanel>
-        <TabPanel value="chat" sx={{ p: 0 }}></TabPanel>
+        <TabPanel value="chat" sx={{ p: 0 }}>
+          <ChatSection />
+        </TabPanel>
       </TabContext>
     </Fragment>
   );
